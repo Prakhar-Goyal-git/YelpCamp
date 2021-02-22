@@ -6,9 +6,15 @@ const ejsMate = require('ejs-mate');
 const ExpressError = require('./utils/ExpressError')
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+
+//Routes
+const userRoutes = require('./routes/user')
+const campgroundsRoutes = require('./routes/campgrounds');
+const reviewsRoutes = require('./routes/reviews');
 
 
 
@@ -37,6 +43,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "public")));
 
+
+//cookies
 const sessionConfig = {
     secret: 'thisisasecret',
     resave: false,
@@ -47,28 +55,46 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
-app.use(session(sessionConfig))
 
+app.use(session(sessionConfig))
 app.use(flash());
 
+//Authantication
+app.use(passport.initialize());
+app.use(passport.session()); //persistance login sessions , use after session
+passport.use(new LocalStrategy(User.authenticate())); // Generates function
+
+passport.serializeUser(User.serializeUser()); //how to store it in session
+passport.deserializeUser(User.deserializeUser()) // how to not store it in session
+
+
+
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user //passport initials must lie before
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next()
 })
 
+
+
+
 app.get('/', (req, res) => {
     res.render('home')
 })
 
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
 
+//Routes
+app.use('/campgrounds', campgroundsRoutes);
+app.use('/campgrounds/:id/reviews', reviewsRoutes);
+app.use('/', userRoutes);
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404));
 })
 
+
+//Middleware for err
 app.use((err, req, res, next) => {
     const { status = 500 } = err;
     if (!err.message) err.message = 'SomeThing Went Wrong'
