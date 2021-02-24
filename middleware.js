@@ -3,6 +3,7 @@ const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const ExpressError = require('./utils/ExpressError');
 const Review = require('./models/review')
 
+//checks if loged in or not (.isAuthenticate)
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         //store the url they are requesting
