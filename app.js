@@ -53,13 +53,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "public")));
 
+const secret = process.env.SECRET || "thisisasecret";
+
+
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     secret: secret,
     touchAfter: 24 * 60 * 60
 });
 
-const secret = process.env.SECRET || "thisisasecret";
+
 
 
 store.on("error", function (e) {
@@ -178,7 +181,7 @@ app.use((err, req, res, next) => {
 })
 
 
-
-app.listen(3000, () => {
-    console.log('Serving at port 3000')
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Serving at port ${port}`)
 })
