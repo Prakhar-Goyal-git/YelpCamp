@@ -76,6 +76,7 @@
     cursor: default;
   }
   
+  
   .starability-basic > input:not([disabled]):hover ~ label {
     background-position: 0 0;
   }

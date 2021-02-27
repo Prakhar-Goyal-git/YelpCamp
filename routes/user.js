@@ -8,6 +8,7 @@ const user = require('../controlers/user')
 
 const passport = require('passport');
 
+
 router.route('/register')
     .get(user.renderRegister)
     .post(catchAsync(user.register));

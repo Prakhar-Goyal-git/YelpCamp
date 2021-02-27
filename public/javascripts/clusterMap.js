@@ -5,6 +5,7 @@ const map = new mapboxgl.Map({
     center: [78.9629, 25],
     zoom: 3.5
 });
+
 map.addControl(new mapboxgl.NavigationControl());
 
 map.on('load', function () {

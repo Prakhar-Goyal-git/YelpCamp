@@ -44,6 +44,7 @@ module.exports.showCampground = async (req, res) => {
     res.render('campgrounds/show', { campground });
 }
 
+
 module.exports.renderEditForm = async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
