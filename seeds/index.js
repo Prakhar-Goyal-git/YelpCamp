@@ -31,12 +31,12 @@ const seedDB = async () => {
             title: `${sample(descriptors)} ${sample(places)}`,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/ddngixi5q/image/upload/v1614183840/YelpCamp/x10ajsbsfvlqzfd047le.jpg',
-                    filename: 'YelpCamp/x10ajsbsfvlqzfd047le'
+                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ahfnenvca4tha00h2ubt.png',
+                    filename: 'YelpCamp/ahfnenvca4tha00h2ubt'
                 },
                 {
-                    url: 'https://res.cloudinary.com/ddngixi5q/image/upload/v1614183840/YelpCamp/itpqruuakw9isw6hx0hm.jpg',
-                    filename: 'YelpCamp/itpqruuakw9isw6hx0hm'
+                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ruyoaxgf72nzpi4y6cdi.png',
+                    filename: 'YelpCamp/ruyoaxgf72nzpi4y6cdi'
                 }
             ],
             geometry: { type: 'Point', coordinates: [indcities[i].lng, indcities[i].lat] },
